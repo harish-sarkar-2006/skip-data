@@ -12,6 +12,11 @@ collection = db[COLLECTION_NAME]
 anime_cursor = collection.find({})
 
 for anime in anime_cursor:
+    # Skip if already processed
+    if anime.get("skip_times"):
+        print(f"Skipping {anime.get('info', {}).get('series')} (already processed)")
+        continue
+    
     mal_id = anime.get("info", {}).get("mal_id")
     series_name = anime.get("info", {}).get("series")
     
